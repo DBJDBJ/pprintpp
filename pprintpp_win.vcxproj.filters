@@ -33,6 +33,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="test\windows_branch_readme.md" />
+    <None Include="test\experimental_readme.md" />
   </ItemGroup>
 </Project>

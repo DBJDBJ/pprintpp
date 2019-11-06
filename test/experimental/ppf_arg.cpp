@@ -10,10 +10,10 @@
 using namespace std;
 /*
 every variadic argument is argument to this function
-unless user has not specilazied an overload for user defined type
+unless user has not specialized an overload for user defined type
 
 this returns constexpr T, which is a `tall order`
-might be speeding things up, but the hard requirement 
+might be speeding things up, but the first hard requirement 
 is that argument type must be a "literal type"
 */
 template <typename T>
@@ -56,7 +56,9 @@ inline auto	to_buff (char const* fmt, Args ...args) noexcept -> unique_ptr<char[
 	// move out the unique_ptr
 	return buf;
 }
-///////////////////////////////////////////////////////////////////////
+/*
+example usage
+*/
 // user defined type 'Foo'
 struct Foo {
 	const char* name = "Foo";
@@ -73,7 +75,11 @@ inline constexpr char const * ppf_arg(Foo const & foo_ ) noexcept
 	return foo_.name;
 }
 
-// std:: containers
+/*
+std:: containers example
+notice how we can not have constexpr return since std::vector is not literal
+note: C++20 will imporve the situation, C++20 std::string  might be a literal in this scenario
+*/
 inline char const* ppf_arg(vector<char> const & v_) noexcept
 {
 	// CAUTION! last char might not be a string terminator aka '\0'
@@ -113,10 +119,12 @@ extern "C" int test_4(int, wchar_t* [])
 
 	now the following will compile and work and will use pprintf
 	Foo depends on ppf_arg() overload to be also user defined, it is coupled to it
+
+	And btw: this renders to_buff() redundant ...
 	*/
 	pprintf("\n\nFoo: {s}, Foo: {s}, {s} {d}", ppf_arg(Foo{ "A" }), ppf_arg(Foo{ "B" }), "The answer is:", 42);
 
-	// using std:: container
+	// using std:: container with ppf_arg schema
 	vector<char> vb{'V','e' ,'c' ,'t' ,'o','r', char(0) };
 
 	pprintf("\n\nVector of chars contains: \"{s}\"", ppf_arg(vb));

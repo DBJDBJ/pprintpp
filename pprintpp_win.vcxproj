@@ -121,7 +121,7 @@
     <ClCompile Include="test\wmain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="test\windows_branch_readme.md" />
+    <None Include="test\experimental_readme.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
